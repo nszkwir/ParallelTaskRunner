@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class ApiClient() {
+class ApiClient(private val baseUrl: String? = "https://google.com") {
 
     private var gson: Gson = GsonBuilder()
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -28,15 +28,11 @@ class ApiClient() {
             .build()
 
         retrofit = Retrofit.Builder()
-            .baseUrl(getBaseURL())
+            .baseUrl(baseUrl!!)
             .addConverterFactory(GsonConverterFactory.create(this.gson))
             .client(client)
             .build()
 
-    }
-
-    private fun getBaseURL(): String {
-        return "https://api.mercadolibre.com/sites/MLA/"
     }
 
     fun <S> createService(serviceClass: Class<S>): S {

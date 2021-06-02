@@ -1,11 +1,12 @@
 package com.spitzer.paralleltaskrunner.taskrunner.tasks.base
 
 import com.spitzer.paralleltaskrunner.taskrunner.utils.TaskState
-import kotlinx.coroutines.Deferred
 
-abstract class AbstractBaseTask {
-    var state: TaskState = TaskState.TODO
+abstract class AbstractBaseTask: Task {
+    internal var state: TaskState = TaskState.TODO
+    override fun setState(state: TaskState) {
+        this.state = state
+    }
 
-    abstract suspend fun run()
-    abstract suspend fun awaitAndSave()
+    override fun getState() = state
 }

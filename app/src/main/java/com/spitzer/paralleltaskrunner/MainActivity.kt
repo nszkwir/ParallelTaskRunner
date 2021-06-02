@@ -1,6 +1,7 @@
 package com.spitzer.paralleltaskrunner
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -10,11 +11,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.spitzer.paralleltaskrunner.databinding.ActivityMainBinding
+import com.spitzer.paralleltaskrunner.taskrunner.TaskManager
+import com.spitzer.paralleltaskrunner.taskrunner.TaskRunnerListener
+import com.spitzer.paralleltaskrunner.taskrunner.tasks.base.Task
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TaskRunnerListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var taskManager: TaskManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +32,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        taskManager = TaskManager()
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener {
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+            Log.i("TASK", "MainActivity runCatTasks")
+            taskManager.runDogTasks(this)
         }
     }
 
@@ -54,5 +62,18 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun errorRunningTasks() {
+        Log.i("TASK", "MainActivity errorRunningTasks")
+    }
+
+    override fun uncompleteRunningTasks(uncompleteTasks: ArrayList<Task>) {
+        Log.i("TASK", "MainActivity uncompleteRunningTasks")
+    }
+
+    override fun successRunningTasks() {
+        Log.i("TASK", "MainActivity successRunningTasks")
+
     }
 }

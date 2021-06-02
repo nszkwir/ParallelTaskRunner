@@ -4,7 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class DataThree(
-    val id: Int,
-    val name: String? = ""
+data class DogFact(
+    val fact: String? = ""
 ): Parcelable
