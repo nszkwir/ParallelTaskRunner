@@ -56,7 +56,7 @@ class TaskOne(
     companion object {
         fun createTaskOne(): TaskOne {
             val repository = TaskOneRepository(
-                ApiClient("https://cat-fact.herokuapp.com").createService(CatsFactsService::class.java)
+                ApiClient("https://cat-fact.herokuapp.com/").createService(CatsFactsService::class.java)
             )
             Log.i("TASK", "TaskOne createTaskOne OK")
             return TaskOne(repository)

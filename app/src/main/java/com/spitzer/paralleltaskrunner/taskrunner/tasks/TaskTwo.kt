@@ -56,7 +56,7 @@ class TaskTwo(
     companion object {
         fun createTaskTwo(): TaskTwo {
             val repository = TaskTwoRepository(
-                ApiClient("https://dog-facts-api.herokuapp.com/api/v1/resources").createService(
+                ApiClient("https://dog-facts-api.herokuapp.com/api/v1/resources/").createService(
                     DogsFactsService::class.java
                 )
             )

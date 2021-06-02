@@ -15,38 +15,22 @@ object TaskHelper {
 
     fun getCatTasks(): ArrayList<Task> {
         val arrayOfTasks = arrayListOf<Task>()
-        val taskOne = TaskOne(
-            TaskOneRepository(
-                ApiClient().createService(CatsFactsService::class.java)
-            )
-        )
+        val taskOne = TaskOne.createTaskOne()
         arrayOfTasks.add(taskOne)
         return arrayOfTasks
     }
 
     fun getDogTasks(): ArrayList<Task> {
         val arrayOfTasks = arrayListOf<Task>()
-        val taskTwo = TaskTwo(
-            TaskTwoRepository(
-                ApiClient().createService(DogsFactsService::class.java)
-            )
-        )
+        val taskTwo = TaskTwo.createTaskTwo()
         arrayOfTasks.add(taskTwo)
         return arrayOfTasks
     }
 
     fun getCatDogTasks(): ArrayList<Task> {
         val arrayOfTasks = arrayListOf<Task>()
-        val taskOne = TaskOne(
-            TaskOneRepository(
-                ApiClient().createService(CatsFactsService::class.java)
-            )
-        )
-        val taskTwo = TaskTwo(
-            TaskTwoRepository(
-                ApiClient().createService(DogsFactsService::class.java)
-            )
-        )
+        val taskOne = TaskOne.createTaskOne()
+        val taskTwo = TaskTwo.createTaskTwo()
         arrayOfTasks.add(taskOne)
         arrayOfTasks.add(taskTwo)
         return arrayOfTasks

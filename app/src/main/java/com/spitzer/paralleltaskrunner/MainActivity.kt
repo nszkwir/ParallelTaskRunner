@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), TaskRunnerListener {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
             Log.i("TASK", "MainActivity runCatTasks")
-            taskManager.runDogTasks(this)
+            taskManager.runCatDogTasks(this)
         }
     }
 
