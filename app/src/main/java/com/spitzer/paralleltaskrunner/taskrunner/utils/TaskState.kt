@@ -4,5 +4,6 @@ enum class TaskState {
     TODO,
     DONE,
     UNCOMPLETE,
-    ERROR
+    ERROR,
+    EXCEPTION
 }

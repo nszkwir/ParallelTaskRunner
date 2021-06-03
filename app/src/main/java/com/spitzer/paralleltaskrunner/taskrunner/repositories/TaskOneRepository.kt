@@ -1,5 +1,6 @@
 package com.spitzer.paralleltaskrunner.taskrunner.repositories
 
+import android.util.Log
 import com.spitzer.paralleltaskrunner.taskrunner.data.CatFact
 import com.spitzer.paralleltaskrunner.core.ResultData
 import com.spitzer.paralleltaskrunner.core.localSafeCall
@@ -15,6 +16,7 @@ class TaskOneRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ITaskOneRepository {
     override suspend fun getCatFact(): ResultData<CatFact?> {
+        Log.i("TASK", "TaskOne run getCatFact")
         return withContext(ioDispatcher) {
             return@withContext safeCall {
                 service.getCatFact()
@@ -23,6 +25,7 @@ class TaskOneRepository(
     }
 
     override suspend fun getRandomStringNumber(): ResultData<String?> {
+        Log.i("TASK", "TaskOne run getRandomStringNumber")
         return withContext(ioDispatcher) {
             return@withContext localSafeCall {
                 Random.nextInt(999,9999).toString()
