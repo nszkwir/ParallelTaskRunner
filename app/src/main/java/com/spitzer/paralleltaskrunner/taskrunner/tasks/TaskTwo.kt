@@ -18,16 +18,16 @@ class TaskTwo(
 ) : AbstractBaseTask(), Task {
 
     override suspend fun run() {
-        var catState = TaskState.TODO
-        var stringNumberState = TaskState.TODO
+        var dogState = TaskState.TODO
+        var numberState = TaskState.TODO
         coroutineScope {
 
-            catState = runThenAwaitAndSave(
+            dogState = runThenAwaitAndSave(
                 { repository.getDogFacts(Random.nextInt(1, 3)) },
                 { catFact: ResultData<ArrayList<DogFact>?> -> saveDogFact(catFact) }
             )
 
-            stringNumberState = runThenAwaitAndSave(
+            numberState = runThenAwaitAndSave(
                 { repository.getRandomNumber() },
                 { number: ResultData<Int?> -> saveNumber(number) }
             )
@@ -35,14 +35,14 @@ class TaskTwo(
         }
 
         val overallState =
-            if (catState == TaskState.DONE && stringNumberState == TaskState.DONE)
+            if (dogState == TaskState.DONE && numberState == TaskState.DONE)
                 TaskState.DONE
             else
                 TaskState.UNCOMPLETE
 
-        Log.i("TASK", "TaskOne catState $catState")
-        Log.i("TASK", "TaskOne stringNumberState $stringNumberState")
-        Log.i("TASK", "TaskOne overallState $overallState")
+        Log.i("TASK", "TaskTwo dogState $dogState")
+        Log.i("TASK", "TaskTwo numberState $numberState")
+        Log.i("TASK", "TaskTwo overallState $overallState")
 
         setState(overallState)
     }
