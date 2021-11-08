@@ -5,5 +5,5 @@ import com.spitzer.paralleltaskrunner.taskrunner.data.DogFact
 
 interface ITaskTwoRepository {
     suspend fun getDogFacts(amount: Int): ResultData<ArrayList<DogFact>?>
-    suspend fun getRandomNumber(): ResultData<Int?>
+    suspend fun getRandomNumber(delayInMillis: Long): ResultData<Int?>
 }

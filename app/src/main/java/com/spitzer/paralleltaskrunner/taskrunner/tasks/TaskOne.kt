@@ -10,13 +10,18 @@ import com.spitzer.paralleltaskrunner.taskrunner.services.CatsFactsService
 import com.spitzer.paralleltaskrunner.taskrunner.tasks.base.AbstractBaseTask
 import com.spitzer.paralleltaskrunner.taskrunner.tasks.base.Task
 import com.spitzer.paralleltaskrunner.taskrunner.utils.TaskState
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class TaskOne(
     private val repository: TaskOneRepository
 ) : AbstractBaseTask(), Task {
 
-    override suspend fun run() {
+    lateinit var catResult: Deferred<ResultData<CatFact?>>
+    lateinit var stringNumberResult: Deferred<ResultData<String?>>
+
+    override suspend fun runAwaitAndSave() {
         var catState = TaskState.TODO
         var stringNumberState = TaskState.TODO
         coroutineScope {
@@ -32,6 +37,31 @@ class TaskOne(
             )
 
         }
+
+        val overallState =
+            if (catState == TaskState.DONE && stringNumberState == TaskState.DONE)
+                TaskState.DONE
+            else
+                TaskState.UNCOMPLETE
+
+        Log.i("TASK", "TaskOne catState $catState")
+        Log.i("TASK", "TaskOne stringNumberState $stringNumberState")
+        Log.i("TASK", "TaskOne overallState $overallState")
+
+        setState(overallState)
+    }
+
+    override suspend fun run() {
+        coroutineScope {
+            catResult = async { repository.getCatFact() }
+            stringNumberResult = async { repository.getRandomStringNumber() }
+        }
+    }
+
+    override suspend fun awaitAndSave() {
+
+        val catState = saveCatFact(catResult.await())
+        val stringNumberState = saveStringNumber(stringNumberResult.await())
 
         val overallState =
             if (catState == TaskState.DONE && stringNumberState == TaskState.DONE)

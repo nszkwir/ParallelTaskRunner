@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CatFact(
-    val user: Int,
+    val user: String?,
     val text: String? = "",
     val source: String? = "",
     val type: String? = ""

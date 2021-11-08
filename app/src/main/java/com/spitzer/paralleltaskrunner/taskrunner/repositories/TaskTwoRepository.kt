@@ -7,6 +7,7 @@ import com.spitzer.paralleltaskrunner.taskrunner.data.DogFact
 import com.spitzer.paralleltaskrunner.taskrunner.services.DogsFactsService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
@@ -16,15 +17,16 @@ class TaskTwoRepository(
 ) : ITaskTwoRepository {
     override suspend fun getDogFacts(amount: Int): ResultData<ArrayList<DogFact>?> {
         return withContext(ioDispatcher) {
-            return@withContext safeCall {
+            return@withContext safeCall("TaskTwo run getDogFacts") {
                 service.getDogFacts(amount)
             }
         }
     }
 
-    override suspend fun getRandomNumber(): ResultData<Int?> {
+    override suspend fun getRandomNumber(delayInMillis: Long): ResultData<Int?> {
         return withContext(ioDispatcher) {
-            return@withContext localSafeCall {
+            delay(delayInMillis)
+            return@withContext localSafeCall("TaskTwo run getRandomNumber") {
                 Random.nextInt(0, 299)
             }
         }
